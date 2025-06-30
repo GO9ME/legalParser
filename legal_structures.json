@@ -1,0 +1,121 @@
+{
+  "KOREA": {
+    "name": "한국",
+    "hierarchy": ["장", "절", "조", "항", "호", "목"],
+    "patterns": {
+      "장": "^제([0-9]+)장\\s",
+      "절": "^제([0-9]+)절\\s",
+      "조": "^제([0-9]+(?:의[0-9]+)?)조(?:\\([^)]*\\))?\\s",
+      "항": "^([①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳])\\s",
+      "호": "^([0-9]+)\\.\\s(?![0-9])",
+      "목": "^([가-힟])\\.\\s"
+    },
+    "addendum_pattern": "^부\\s*칙",
+    "id_post_processing": {
+      "항": "map_circled_nums"
+    },
+    "description": "법 -> 제X장 -> 제X절 -> 제X조 -> ① 항 -> 1. 호 -> 가. 목"
+  },
+  "JAPAN": {
+    "name": "일본",
+    "hierarchy": ["章", "節", "款", "条", "項", "号"],
+    "patterns": {
+      "章": "^第([一二三四五六七八九十百]+)章\\s",
+      "節": "^第([一二三四五六七八九十百]+)節\\s",
+      "款": "^第([一二三四五六七八九十百]+)款\\s",
+      "条": "^第([一二三四五六七八九十百]+(?:の[一二三四五六七八九十百]+)?)条\\s",
+      "項": "^([０-９]+)\\s",
+      "号": "^（([一二三四五六七八九十百]+)）\\s"
+    },
+    "split_regex": "(?=第[一二三四五六七八九十百]+条(?:の[一二三四五六七八九十百]+)?)",
+    "toc_keyword": "目次",
+    "addendum_pattern": "^附\\s*則",
+    "description": "법 -> 章 -> 節 -> 款 -> 条 -> 項(전각숫자) -> 号(（一）)"
+  },
+  "CHINA": {
+    "name": "중국",
+    "hierarchy": ["章", "条", "款"],
+    "patterns": {
+      "章": "^第([一二三四五六七八九十百]+)章\\s",
+      "条": "^第([一二三四五六七八九十百]+)条\\s",
+      "款": "^（([一二三四五六七八九十百]+)）\\s"
+    },
+    "split_regex": "(?=第[一二三四五六七八九十百]+条)",
+    "toc_keyword": "目 录",
+    "junk_line_pattern": "^－\\\\d+－$",
+    "addendum_pattern": "^附\\s*则",
+    "description": "법 -> 章 -> 条 -> 款"
+  },
+  "USA": {
+    "name": "미국식 영문 (범용)",
+    "hierarchy": ["ACT", "CHAPTER", "SECTION", "Article", "Paragraph", "Item", "SubItem"],
+    "patterns": {
+      "ACT": "^(\\d+)\\.\\s[A-Z ]+ACT",
+      "CHAPTER": "^CHAPTER ([IVXLC]+)",
+      "SECTION": "^SECTION (\\d+)",
+      "Article": "^Article (\\d+)",
+      "Paragraph": "^\\((\\d+)\\)",
+      "Item": "^(\\d+)\\.",
+      "SubItem": "^\\(([a-z])\\)"
+    },
+    "split_regex": "(?=Article \\d+)",
+    "toc_keyword": "Table of Contents",
+    "addendum_pattern": "^(APPENDIX|ADDENDUM|SCHEDULE)",
+    "description": "법 -> ACT -> CHAPTER -> SECTION -> Article -> (1) Paragraph -> 1. Item -> (a) SubItem"
+  },
+  "UK": {
+    "name": "영국",
+    "hierarchy": ["Part", "Section", "Subsection", "Paragraph"],
+    "patterns": {
+      "Part": "^Part (\\d+)",
+      "Section": "^(\\d+[A-Z]?)\\.?",
+      "Subsection": "^\\((\\d+)\\)",
+      "Paragraph": "^\\(([a-z])\\)"
+    },
+    "split_regex": "(?=^\\d+[A-Z]?\\.?|Part \\d+)",
+    "toc_keyword": "CONTENTS",
+    "addendum_pattern": "^(APPENDIX|ADDENDUM|SCHEDULE)",
+    "description": "법 -> Part -> Section -> (1) Subsection -> (a) Paragraph"
+  },
+  "EU": {
+    "name": "유럽연합",
+    "hierarchy": ["Chapter", "Article", "Paragraph", "Point"],
+    "patterns": {
+      "Chapter": "^Chapter ([IVXLC]+)",
+      "Article": "^Article (\\d+)",
+      "Paragraph": "^(\\d+)\\.",
+      "Point": "^\\(([a-z])\\)"
+    },
+    "split_regex": "(?=Article \\d+)",
+    "toc_keyword": "CONTENTS",
+    "addendum_pattern": "^(ANNEX)",
+    "description": "Regulation/Directive -> Chapter -> Article -> 1. Paragraph -> (a) Point"
+  },
+  "FRANCE": {
+    "name": "프랑스",
+    "hierarchy": ["Livre", "Titre", "Chapitre", "Section", "Article"],
+    "patterns": {
+      "Livre": "^Livre ([IVXLC0-9]+)",
+      "Titre": "^Titre ([IVXLC0-9]+)",
+      "Chapitre": "^Chapitre ([IVXLC0-9]+)",
+      "Section": "^Section ([0-9]+)",
+      "Article": "^Article L\\.? ?(\\d+(?:-\\d+)?)"
+    },
+    "split_regex": "(?=Article L\\.? ?\\d+)",
+    "addendum_pattern": "^(Annexe)",
+    "description": "법 -> Livre -> Titre -> Chapitre -> Section -> Article"
+  },
+  "GERMANY": {
+    "name": "독일",
+    "hierarchy": ["Abschnitt", "Artikel", "Absatz", "Nummer", "Buchstabe"],
+    "patterns": {
+      "Abschnitt": "^Abschnitt (\\d+)",
+      "Artikel": "^(?:Art|Artikel)\\.? (\\d+)",
+      "Absatz": "^\\((\\d+)\\)",
+      "Nummer": "^(\\d+)\\.",
+      "Buchstabe": "^([a-z])\\)"
+    },
+    "split_regex": "(?=(?:Art|Artikel)\\.? \\d+)",
+    "description": "Gesetz -> Abschnitt -> Artikel -> (1) Absatz -> 1. Nummer -> a) Buchstabe"
+  }
+} 
